@@ -1,0 +1,6 @@
+<script>start("/Users/kunal/PESU/Code/kunal_portfolio/images/");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("about1.JPG","about1.JPG",0,9000697,"8.6 MB",1749552499,"6/10/25, 4:18:19 PM");</script>
+<script>addRow("about2.JPG","about2.JPG",0,11510138,"11.0 MB",1749552499,"6/10/25, 4:18:19 PM");</script>
+<script>addRow("about3.JPG","about3.JPG",0,63399,"61.9 kB",1749552499,"6/10/25, 4:18:19 PM");</script>
+<script>addRow("profile.png","profile.png",0,236349,"231 kB",1749410390,"6/9/25, 12:49:50 AM");</script>
