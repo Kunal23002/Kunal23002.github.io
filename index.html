@@ -20,10 +20,28 @@
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
+        /* Light Theme Variables */
+        .light-theme {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #0a0a0a;
+            --text-secondary: #4a4a4a;
+            --accent-blue: #0066cc;
+            --accent-green: #00aa44;
+            --accent-purple: #6b46c1;
+            --glass-bg: rgba(0, 0, 0, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Smooth transitions for theme switching */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         body {
@@ -32,6 +50,7 @@
             color: var(--text-primary);
             overflow-x: hidden;
             scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Animated Background */
@@ -618,6 +637,98 @@
                 gap: 1rem;
             }
         }
+
+        /* Light Theme Specific Adjustments */
+        .light-theme .sidebar {
+            background: rgba(248, 249, 250, 0.9);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .light-theme .glass-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .light-theme .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.1);
+        }
+
+        .light-theme .timeline-content {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .light-theme .timeline-content:hover {
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.1);
+        }
+
+        .light-theme .skill-category {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .light-theme .skill-category:hover {
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.15);
+        }
+
+        .light-theme .project-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .light-theme .project-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 102, 204, 0.2);
+        }
+
+        .light-theme .recommendation-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .light-theme .recommendation-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.15);
+        }
+
+        .light-theme .social-link {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .light-theme .social-link:hover {
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .light-theme .skill-tag {
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(0, 102, 204, 0.2);
+        }
+
+        .light-theme .skill-tag:hover {
+            background: rgba(0, 102, 204, 0.2);
+        }
+
+        .light-theme .nav-link:hover {
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .light-theme .nav-link.active {
+            background: rgba(0, 102, 204, 0.2);
+        }
+
+        .light-theme .gallery-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+
+        .light-theme .profile-img {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Light theme scroll progress bar */
+        .light-theme .scroll-progress {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+        }
     </style>
 </head>
 <body>
@@ -1181,6 +1292,7 @@
 
         // Add scroll progress indicator
         const progressBar = document.createElement('div');
+        progressBar.className = 'scroll-progress';
         progressBar.style.position = 'fixed';
         progressBar.style.top = '0';
         progressBar.style.left = '0';
@@ -1243,7 +1355,7 @@
             return current;
         }
 
-        // Add theme toggle functionality (bonus feature)
+        // Add theme toggle functionality with persistence
         function createThemeToggle() {
             const toggle = document.createElement('button');
             toggle.innerHTML = '<i class="fas fa-moon"></i>';
@@ -1260,15 +1372,42 @@
             toggle.style.fontSize = '1.2rem';
             toggle.style.zIndex = '1000';
             toggle.style.transition = 'all 0.3s ease';
+            toggle.style.backdropFilter = 'blur(20px)';
+            toggle.title = 'Toggle Theme';
+            
+            // Load saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                toggle.querySelector('i').className = 'fas fa-sun';
+            }
             
             toggle.addEventListener('click', function() {
-                document.body.classList.toggle('light-theme');
+                const isLightTheme = document.body.classList.contains('light-theme');
                 const icon = this.querySelector('i');
-                if (document.body.classList.contains('light-theme')) {
-                    icon.className = 'fas fa-sun';
-                } else {
+                
+                if (isLightTheme) {
+                    // Switch to dark theme
+                    document.body.classList.remove('light-theme');
                     icon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    // Switch to light theme
+                    document.body.classList.add('light-theme');
+                    icon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'light');
                 }
+            });
+            
+            // Add hover effect
+            toggle.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 212, 255, 0.3)';
+            });
+            
+            toggle.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
             });
             
             document.body.appendChild(toggle);
