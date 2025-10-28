@@ -64,14 +64,103 @@
             background: radial-gradient(circle at 20% 50%, var(--accent-blue) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, var(--accent-purple) 0%, transparent 50%),
                         radial-gradient(circle at 40% 80%, var(--accent-green) 0%, transparent 50%);
-            opacity: 0.03;
+            opacity: 0.15;
             animation: float 20s ease-in-out infinite;
+        }
+
+        /* Enhanced background animation for light theme */
+        .light-theme .background-animation {
+            opacity: 0.08;
+            background: radial-gradient(circle at 20% 50%, var(--accent-blue) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 20%, var(--accent-purple) 0%, transparent 60%),
+                        radial-gradient(circle at 40% 80%, var(--accent-green) 0%, transparent 60%);
         }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(30px, -30px) rotate(120deg); }
             66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Additional floating particles */
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 60% 30%, var(--accent-green) 0%, transparent 40%),
+                        radial-gradient(circle at 30% 70%, var(--accent-blue) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 60%, var(--accent-purple) 0%, transparent 40%);
+            opacity: 0.1;
+            animation: float-reverse 25s ease-in-out infinite;
+        }
+
+        .light-theme .background-animation::before {
+            opacity: 0.05;
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-25px, 25px) rotate(-120deg); }
+            66% { transform: translate(15px, -15px) rotate(-240deg); }
+        }
+
+        /* Additional floating orbs */
+        .background-animation::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 10% 20%, var(--accent-purple) 0%, transparent 30%),
+                        radial-gradient(circle at 90% 80%, var(--accent-blue) 0%, transparent 30%),
+                        radial-gradient(circle at 50% 10%, var(--accent-green) 0%, transparent 30%);
+            opacity: 0.08;
+            animation: float-slow 30s ease-in-out infinite;
+        }
+
+        .light-theme .background-animation::after {
+            opacity: 0.04;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(20px, -20px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-15px, 15px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(10px, -10px) rotate(270deg) scale(1.05); }
+        }
+
+        /* Floating particles */
+        .floating-particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: particle-float 15s linear infinite;
+        }
+
+        .light-theme .floating-particle {
+            opacity: 0.3;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Sidebar Navigation */
@@ -1414,6 +1503,41 @@
         }
         
         createThemeToggle();
+
+        // Enhanced background animation with floating particles
+        function createFloatingParticles() {
+            const colors = ['var(--accent-blue)', 'var(--accent-green)', 'var(--accent-purple)'];
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
+                
+                // Random properties
+                const size = Math.random() * 4 + 2; // 2-6px
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const startX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 5; // 0-5s delay
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = color;
+                particle.style.left = startX + 'px';
+                particle.style.animationDelay = delay + 's';
+                particle.style.opacity = '0.6';
+                
+                document.body.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 20000);
+            }, 2000); // Create new particle every 2 seconds
+        }
+
+        // Start floating particles
+        createFloatingParticles();
     </script>
 </body>
 </html>
