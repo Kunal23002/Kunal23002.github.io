@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KUNAL - Developer · Programmer · Student</title>
     
+    <!-- Preconnect for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     
@@ -138,6 +144,7 @@
             z-index: 9999;
             mix-blend-mode: difference;
             transition: transform 0.2s ease, opacity 0.3s ease;
+            will-change: transform;
         }
 
         .cursor-dot.active {
@@ -154,6 +161,7 @@
             z-index: 9998;
             opacity: 0;
             transition: opacity 0.3s ease;
+            will-change: transform, opacity;
         }
 
         .cursor-trail.trail-1 { background: rgba(255, 107, 0, 0.6); }
@@ -323,6 +331,7 @@
                 0 30px 60px rgba(0, 0, 0, 0.3),
                 0 15px 30px rgba(0, 0, 0, 0.2),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
+            will-change: transform;
         }
 
         body.light-theme .hero-carousel {
@@ -1949,18 +1958,18 @@
             
             <div class="about-image swiper about-image-carousel">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="images/IMG_5555.PNG" alt="Kunal"></div>
-                    <div class="swiper-slide"><img src="images/about1.JPG" alt="Working on Projects"></div>
-                    <div class="swiper-slide"><img src="images/about2.JPG" alt="Adventures"></div>
-                    <div class="swiper-slide"><img src="images/about3.JPG" alt="Receiving Awards"></div>
-                    <div class="swiper-slide"><img src="images/DSC00466.JPG" alt="Experience"></div>
-                    <div class="swiper-slide"><img src="images/IMG_0675.JPG" alt="Moments"></div>
-                    <div class="swiper-slide"><img src="images/IMG_1645.jpg" alt="Journey"></div>
-                    <div class="swiper-slide"><img src="images/IMG_2133.jpg" alt="Achievements"></div>
-                    <div class="swiper-slide"><img src="images/IMG_5072.jpg" alt="Experiences"></div>
-                    <div class="swiper-slide"><img src="images/IMG_5748 Copy.JPG" alt="Events"></div>
-                    <div class="swiper-slide"><img src="images/IMG_7329.JPG" alt="Memories"></div>
-                    <div class="swiper-slide"><img src="images/IMG_9849.JPG" alt="Highlights"></div>
+                    <div class="swiper-slide"><img src="images/IMG_5555.PNG" alt="Kunal" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/about1.JPG" alt="Working on Projects" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/about2.JPG" alt="Adventures" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/about3.JPG" alt="Receiving Awards" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/DSC00466.JPG" alt="Experience" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_0675.JPG" alt="Moments" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_1645.jpg" alt="Journey" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_2133.jpg" alt="Achievements" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_5072.jpg" alt="Experiences" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_5748 Copy.JPG" alt="Events" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_7329.JPG" alt="Memories" loading="lazy"></div>
+                    <div class="swiper-slide"><img src="images/IMG_9849.JPG" alt="Highlights" loading="lazy"></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -2135,7 +2144,7 @@
             <div class="education-card">
                 <div class="education-dot"></div>
                 <div class="education-image">
-                    <img src="images/sjsuimg.jpg" alt="San Jose State University">
+                    <img src="images/sjsuimg.jpg" alt="San Jose State University" loading="lazy">
                     </div>
                 <div class="education-content">
                     <h3 class="education-degree">Master of Computer Science</h3>
@@ -2147,7 +2156,7 @@
             <div class="education-card">
                 <div class="education-dot"></div>
                 <div class="education-image">
-                    <img src="images/pesuimg.jpeg" alt="PES University">
+                    <img src="images/pesuimg.jpeg" alt="PES University" loading="lazy">
                 </div>
                 <div class="education-content">
                     <h3 class="education-degree">B.Tech in Computer Science Engineering</h3>
@@ -2162,7 +2171,7 @@
             <div class="education-card">
                 <div class="education-dot"></div>
                 <div class="education-image">
-                    <img src="images/bcbsimg.jpeg" alt="Bishop Cotton Boys School">
+                    <img src="images/bcbsimg.jpeg" alt="Bishop Cotton Boys School" loading="lazy">
                 </div>
                 <div class="education-content">
                     <h3 class="education-degree">School</h3>
@@ -2484,33 +2493,45 @@
             });
         });
 
-        // Initialize Swiper for Hero Carousel (Faster)
+        // Initialize Swiper for Hero Carousel (Optimized)
         const heroSwiper = new Swiper('.hero-carousel', {
             effect: 'fade',
-            speed: 800,
+            speed: 600,
             autoplay: {
-                delay: 1500,
+                delay: 2000,
                 disableOnInteraction: false,
             },
             loop: true,
+            lazy: {
+                loadPrevNext: true,
+                loadPrevNextAmount: 1,
+            },
+            preloadImages: false,
+            watchSlidesProgress: true,
         });
 
-        // Initialize Swiper for About Image Carousel
+        // Initialize Swiper for About Image Carousel (Optimized)
         const aboutImageSwiper = new Swiper('.about-image-carousel', {
             effect: 'fade',
             fadeEffect: {
                 crossFade: true
             },
             loop: true,
-            speed: 800,
+            speed: 600,
             autoplay: {
-                delay: 3000,
+                delay: 3500,
                 disableOnInteraction: false,
             },
             navigation: {
                 nextEl: '.about-image-carousel .swiper-button-next',
                 prevEl: '.about-image-carousel .swiper-button-prev',
             },
+            lazy: {
+                loadPrevNext: true,
+                loadPrevNextAmount: 2,
+            },
+            preloadImages: false,
+            watchSlidesProgress: true,
         });
 
         // Hamburger Menu Toggle
@@ -2599,17 +2620,7 @@
             });
         });
 
-        // Quote Ticker parallax fade
-        gsap.to('.quote-ticker', {
-            scrollTrigger: {
-                trigger: '.quote-ticker',
-                start: 'top center',
-                end: 'bottom top',
-                scrub: 1,
-            },
-            opacity: 0.4,
-            scale: 0.98,
-        });
+        // Quote Ticker parallax removed for performance
 
         // Smooth Section Entrance Animations
         gsap.utils.toArray('section:not(#hero)').forEach((section, index) => {
@@ -2815,17 +2826,7 @@
                 ease: 'back.out(1.5)',
             });
 
-            // Scale on scroll for parallax depth
-            gsap.to(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1,
-                },
-                scale: 1.05,
-                ease: 'none',
-            });
+            // Scale on scroll removed for performance
         });
 
         gsap.utils.toArray('.recommendation-card').forEach((card, i) => {
@@ -2861,16 +2862,7 @@
             });
         });
 
-        // About carousel image scale effect
-        gsap.to('.about-image-carousel .swiper-slide img', {
-            scale: 1.1,
-            scrollTrigger: {
-                trigger: '.about-image-carousel',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1,
-            },
-        });
+        // About carousel image scale effect - removed for performance
 
         // Social links animation with rotation
         gsap.from('.social-links .social-link', {
@@ -2888,32 +2880,7 @@
             ease: 'back.out(2.5)',
         });
 
-        // Add subtle parallax to section headers
-        gsap.utils.toArray('.section-title').forEach((title) => {
-            gsap.from(title, {
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1,
-                },
-                x: -50,
-                opacity: 0.5,
-            });
-        });
-
-        // Parallax effect on section numbers
-        gsap.utils.toArray('.section-number').forEach((num) => {
-            gsap.from(num, {
-                scrollTrigger: {
-                    trigger: num,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 2,
-                },
-                x: -100,
-            });
-        });
+        // Parallax effects removed for better performance
 
         // Animated lines across section titles on scroll
         const sectionHeaders = document.querySelectorAll('.section-header');
