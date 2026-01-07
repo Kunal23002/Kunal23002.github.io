@@ -1433,6 +1433,65 @@
         }
 
         /* ============================================
+           OTHER ACCOMPLISHMENTS SECTION
+        ============================================ */
+        .accomplishments {
+            padding: var(--section-padding);
+            background: var(--bg-primary);
+            position: relative;
+        }
+        
+        .accomplishments::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.03), transparent 50%);
+            z-index: 0;
+        }
+
+        .accomplishments-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .accomplishment-card {
+            background: var(--bg-secondary);
+            padding: 50px 40px;
+            text-align: center;
+            border-top: 4px solid var(--accent-orange);
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .accomplishment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255, 107, 0, 0.2);
+            border-top-color: var(--accent-blue);
+        }
+
+        .accomplishment-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 15px;
+            text-transform: capitalize;
+        }
+
+        .accomplishment-description {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ============================================
            RECOMMENDATIONS SECTION
         ============================================ */
         .recommendations {
@@ -1852,7 +1911,7 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
             </button>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -2195,7 +2254,7 @@
                 <div class="projects-grid">
             <div class="project-card">
                 <div class="project-content">
-                        <h3 class="project-title">🧠 Deepfake Detection System</h3>
+                        <h3 class="project-title">Deepfake Detection System</h3>
                     <p class="project-description">
                             Novel approach using physiological features for detecting deepfakes. 
                             Benchmarked on CelebDF and DFDC datasets with high accuracy.
@@ -2208,7 +2267,7 @@
 
             <div class="project-card">
                 <div class="project-content">
-                        <h3 class="project-title">🔄 Yet Another Kafka</h3>
+                        <h3 class="project-title">Yet Another Kafka</h3>
                     <p class="project-description">
                             Custom distributed messaging system built with socket programming. 
                             Implements core Kafka functionality with high throughput.
@@ -2221,7 +2280,7 @@
 
             <div class="project-card">
                 <div class="project-content">
-                        <h3 class="project-title">🖼️ Image Caption Generator</h3>
+                        <h3 class="project-title">Image Caption Generator</h3>
                     <p class="project-description">
                             Vision transformers + NLP for generating Instagram-style captions. 
                             Images stored on AWS S3 with real-time processing.
@@ -2234,7 +2293,7 @@
 
             <div class="project-card">
                 <div class="project-content">
-                        <h3 class="project-title">💸 Bill Splitting App</h3>
+                        <h3 class="project-title">Bill Splitting App</h3>
                     <p class="project-description">
                             Lightweight Python CLI/GUI application for splitting bills among friends. 
                             Features expense tracking and automated calculations.
@@ -2247,7 +2306,7 @@
 
             <div class="project-card">
                 <div class="project-content">
-                    <h3 class="project-title">📚 OnlyNotes</h3>
+                    <h3 class="project-title">OnlyNotes</h3>
                     <p class="project-description">
                         Classroom notes sharing platform that brings students together. Features Canvas LMS integration, 
                         secure authentication with Stack Auth, and collaborative study materials.
@@ -2260,7 +2319,7 @@
 
             <div class="project-card">
                 <div class="project-content">
-                    <h3 class="project-title">🎤 AI Jobs Screener</h3>
+                    <h3 class="project-title">AI Jobs Screener</h3>
                     <p class="project-description">
                         Voice-powered job screening platform for blue-collar workers. Uses VAPI.ai for real-time voice interviews 
                         and Convex for backend management with automated assessment generation.
@@ -2273,10 +2332,25 @@
             </div>
         </section>
 
+        <!-- Other Accomplishments Section -->
+    <section id="accomplishments" class="accomplishments">
+        <div class="section-header">
+            <div class="section-number">06</div>
+                    <h2 class="section-title">Other Accomplishments</h2>
+                </div>
+        
+        <div class="accomplishments-content">
+            <div class="accomplishment-card">
+                <h3 class="accomplishment-title">2x Hackathon Winner</h3>
+                <p class="accomplishment-description">Hackathons sponsored by Vercel and AWS</p>
+            </div>
+        </div>
+    </section>
+
         <!-- Recommendations Section -->
     <section id="recommendations" class="recommendations">
         <div class="section-header">
-            <div class="section-number">06</div>
+            <div class="section-number">07</div>
                     <h2 class="section-title">Endorsed By</h2>
                 </div>
         
@@ -2313,7 +2387,7 @@
         <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="section-header">
-            <div class="section-number">07</div>
+            <div class="section-number">08</div>
                     <h2 class="section-title">Let's Connect</h2>
                 </div>
         
@@ -2376,25 +2450,15 @@
         const currentTheme = localStorage.getItem('theme') || 'light';
         if (currentTheme === 'light') {
             body.classList.add('light-theme');
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        } else {
-            // Dark theme
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
         }
 
-        // Theme toggle click handler
+        // Theme toggle click handler - moon icon stays consistent
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('light-theme');
             
             if (body.classList.contains('light-theme')) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
                 localStorage.setItem('theme', 'light');
             } else {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
                 localStorage.setItem('theme', 'dark');
             }
         });
