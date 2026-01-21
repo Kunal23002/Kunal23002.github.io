@@ -508,143 +508,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-cta span {
-            position: relative;
-            z-index: 3;
-        }
-
-        .hero-cta i {
-            position: relative;
-            z-index: 3;
-        }
-
-        .hero-cta::before,
-        .hero-cta::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .hero-cta::before {
-            color: #00ffff;
-            z-index: 1;
-            mix-blend-mode: screen;
-        }
-
-        .hero-cta::after {
-            color: #ff00ff;
-            z-index: 2;
-            mix-blend-mode: screen;
         }
 
         .hero-cta:hover {
-            background: var(--accent-blue);
-            animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-        }
-
-        .hero-cta:hover::before {
-            animation: glitchBefore 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-        }
-
-        .hero-cta:hover::after {
-            animation: glitchAfter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% {
-                transform: translateY(-3px);
-            }
-            10% {
-                transform: translate(-2px, -3px);
-            }
-            20% {
-                transform: translate(2px, -3px);
-            }
-            30% {
-                transform: translate(-2px, -3px);
-            }
-            40% {
-                transform: translate(2px, -3px);
-            }
-            50% {
-                transform: translate(-2px, -3px);
-            }
-            60% {
-                transform: translate(2px, -3px);
-            }
-            70% {
-                transform: translate(-2px, -3px);
-            }
-            80% {
-                transform: translate(2px, -3px);
-            }
-            90% {
-                transform: translate(-2px, -3px);
-            }
-        }
-
-        @keyframes glitchBefore {
-            0%, 100% {
-                opacity: 0;
-                transform: translate(0, 0);
-            }
-            20% {
-                opacity: 0.8;
-                transform: translate(-3px, -2px);
-                clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-            }
-            40% {
-                opacity: 0;
-                transform: translate(3px, 2px);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate(-3px, -2px);
-                clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-            }
-            80% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes glitchAfter {
-            0%, 100% {
-                opacity: 0;
-                transform: translate(0, 0);
-            }
-            20% {
-                opacity: 0.8;
-                transform: translate(3px, 2px);
-                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            }
-            40% {
-                opacity: 0;
-                transform: translate(-3px, -2px);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate(3px, 2px);
-                clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-            }
-            80% {
-                opacity: 0;
-            }
+            background: #ff8533;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
         }
 
         /* ============================================
@@ -1676,6 +1545,82 @@
             border-color: var(--accent-blue);
         }
 
+        /* Resume Dropdown Styles */
+        .resume-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .resume-dropdown-btn {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .resume-dropdown.active .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .resume-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            min-width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-orange);
+            border-radius: 15px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .resume-dropdown.active .resume-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .resume-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .resume-option:last-child {
+            border-bottom: none;
+        }
+
+        .resume-option:hover {
+            background: var(--accent-orange);
+            color: var(--bg-primary);
+            padding-left: 25px;
+        }
+
+        .resume-option i {
+            font-size: 1rem;
+        }
+
         .cal-section {
             background: var(--bg-primary);
             padding: 40px;
@@ -1969,9 +1914,9 @@
                 <p class="hero-tagline">
                     Building meaningful technology at the intersection of innovation, impact, and continuous learning. From AI-powered solutions to enterprise automation.
                 </p>
-                <a href="#about" class="hero-cta" data-text="Explore My Work">
-                    <span>Explore My Work</span> <i class="fas fa-arrow-down"></i>
-            </a>
+                <a href="#about" class="hero-cta">
+                    Explore My Work <i class="fas fa-arrow-down"></i>
+                </a>
         </div>
         </div>
     </section>
@@ -2424,10 +2369,21 @@
                 <a href="mailto:kunal22302@gmail.com" class="contact-btn primary">
                     <i class="fas fa-envelope"></i> Get in Touch
                 </a>
-                <a href="https://drive.google.com/file/d/1Xk6vrImRQOuhj5jy_bA5RRUxJd9KAAg1/view?usp=sharing" class="contact-btn" target="_blank">
-                            <i class="fas fa-file-download"></i> Download Resume
+                <div class="resume-dropdown">
+                    <button class="contact-btn resume-dropdown-btn" id="resumeDropdownBtn">
+                        <i class="fas fa-file-download"></i> Download Resume
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </button>
+                    <div class="resume-dropdown-menu" id="resumeDropdownMenu">
+                        <a href="https://drive.google.com/file/d/1d0RpZgXArG2Mk14UJ7uCzPEbPEgkH0fp/view?usp=sharing" class="resume-option" target="_blank">
+                            <i class="fas fa-code"></i> SWE Resume
+                        </a>
+                        <a href="https://drive.google.com/file/d/1NU1MKgMkJ59C_ywi8_IaDCmLDwOWyFhL/view?usp=sharing" class="resume-option" target="_blank">
+                            <i class="fas fa-brain"></i> AI ML Resume
                         </a>
                     </div>
+                </div>
+            </div>
 
             <div class="cal-section">
                 <h3><i class="fas fa-calendar-alt"></i> Schedule a Meeting</h3>
@@ -2616,6 +2572,32 @@
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
+            });
+        });
+
+        // Resume Dropdown Functionality
+        const resumeDropdownBtn = document.getElementById('resumeDropdownBtn');
+        const resumeDropdown = resumeDropdownBtn.closest('.resume-dropdown');
+        const resumeDropdownMenu = document.getElementById('resumeDropdownMenu');
+
+        // Toggle dropdown on button click
+        resumeDropdownBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            resumeDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!resumeDropdown.contains(e.target)) {
+                resumeDropdown.classList.remove('active');
+            }
+        });
+
+        // Close dropdown when a resume option is clicked
+        document.querySelectorAll('.resume-option').forEach(option => {
+            option.addEventListener('click', () => {
+                resumeDropdown.classList.remove('active');
             });
         });
 
