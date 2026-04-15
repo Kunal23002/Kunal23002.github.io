@@ -84,7 +84,7 @@
         }
 
         body.light-theme .education-image,
-        body.light-theme .project-card {
+        body.light-theme .project-slide__img-wrap {
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
@@ -908,20 +908,40 @@
             position: relative;
         }
 
-        .skills-grid {
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .skills-category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            margin-bottom: 5px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+
+        body.light-theme .skills-category-title {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 30px;
+            gap: 15px;
         }
 
         .skill-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 15px;
+            gap: 5px;
+            padding: 10px;
             transition: transform 0.3s ease;
             cursor: pointer;
             transform: translate3d(0, 0, 0);
@@ -932,7 +952,7 @@
         }
 
         .skill-icon {
-            font-size: 4rem;
+            font-size: 2.5rem;
             color: var(--text-secondary);
             transition: color 0.3s ease;
         }
@@ -1165,7 +1185,7 @@
         }
 
         /* ============================================
-           PROJECTS SECTION - PORTFOLIO GRID
+           PROJECTS SECTION - SHOWCASE CAROUSEL
         ============================================ */
         .projects {
             padding: var(--section-padding);
@@ -1173,45 +1193,234 @@
             position: relative;
         }
 
-        .projects-grid {
+        .projects::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 20%, rgba(255, 255, 255, 0.12), transparent),
+                radial-gradient(1px 1px at 30% 65%, rgba(0, 212, 255, 0.1), transparent),
+                radial-gradient(1px 1px at 72% 40%, rgba(255, 255, 255, 0.08), transparent),
+                radial-gradient(1.5px 1.5px at 88% 78%, rgba(0, 255, 136, 0.08), transparent),
+                radial-gradient(1px 1px at 55% 12%, rgba(255, 107, 0, 0.06), transparent);
+            background-size: 100% 100%;
+            pointer-events: none;
+            opacity: 0.85;
+            z-index: 0;
+        }
+
+        body.light-theme .projects::before {
+            opacity: 0.45;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 20%, rgba(255, 107, 0, 0.08), transparent),
+                radial-gradient(1px 1px at 30% 65%, rgba(0, 212, 255, 0.08), transparent),
+                radial-gradient(1px 1px at 72% 40%, rgba(0, 0, 0, 0.06), transparent),
+                radial-gradient(1.5px 1.5px at 88% 78%, rgba(0, 255, 136, 0.06), transparent),
+                radial-gradient(1px 1px at 55% 12%, rgba(255, 107, 0, 0.05), transparent);
+        }
+
+        .projects .section-header,
+        .projects-carousel-wrap {
+            position: relative;
+            z-index: 1;
+        }
+
+        .projects-carousel-wrap {
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
+            padding: 10px clamp(8px, 2vw, 20px) 16px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: clamp(8px, 1.5vw, 16px);
+            overflow: visible;
         }
 
-        .project-card {
-            background: var(--bg-primary);
-            border-top: 3px solid var(--accent-orange);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Side nav sits in gutters; buttons are real flex items (not over the slide) */
+        .projects-nav-pair {
+            display: contents;
+        }
+
+        .projects-nav-btn {
+            flex: 0 0 48px;
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            margin: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--text-primary);
+            background: rgba(10, 10, 10, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+            z-index: 2;
+        }
+
+        .projects-nav-btn i {
+            font-size: 0.95rem;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .projects-nav-btn:hover {
+            border-color: rgba(0, 212, 255, 0.55);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.12);
+        }
+
+        .projects-nav-btn:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .projects-nav-btn.swiper-button-disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .projects-nav-btn--prev {
+            order: 1;
+        }
+
+        .projects-nav-btn--next {
+            order: 3;
+        }
+
+        body.light-theme .projects-nav-btn {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(0, 0, 0, 0.12);
+            color: var(--text-primary);
+        }
+
+        .projects-swiper {
+            order: 2;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
             position: relative;
-            transform: translate3d(0, 0, 0);
+            overflow: hidden;
+            padding-bottom: 42px;
+            box-sizing: border-box;
         }
 
-        .project-card:hover {
-            transform: translate3d(0, -10px, 0);
-            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
+        .projects-swiper .swiper-wrapper {
+            align-items: stretch;
         }
 
-        .project-content {
-            padding: 30px;
+        .projects-swiper .swiper-slide {
+            height: auto;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .project-slide {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: clamp(32px, 6vw, 80px);
+            min-height: min(520px, 70vh);
+            padding: 20px 4px 8px;
+            width: 100%;
+            max-width: 100%;
+            direction: ltr;
+        }
+
+        .project-slide__text {
+            flex: 1 1 42%;
+            max-width: 520px;
+            min-width: 0;
+            padding-right: clamp(8px, 2vw, 24px);
+            order: 1;
+        }
+
+        .project-slide__visual {
+            flex: 1 1 52%;
+            min-width: 0;
+            position: relative;
+            order: 2;
+        }
+
+        .project-slide__img-wrap {
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.45),
+                0 0 0 1px rgba(255, 107, 0, 0.12);
+            background: var(--bg-secondary);
+        }
+
+        body.light-theme .project-slide__img-wrap {
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-slide__img {
+            width: 100%;
+            height: auto;
+            min-height: 280px;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
         }
 
         .project-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 2.2vw, 2rem);
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             text-transform: capitalize;
-            letter-spacing: 0px;
+            letter-spacing: 0;
+            color: var(--text-primary);
+            line-height: 1.25;
         }
 
         .project-description {
             color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 20px;
+            line-height: 1.85;
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+
+        .project-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border-radius: 999px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid rgba(0, 212, 255, 0.45);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);
+            transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-cta:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            box-shadow: 0 0 24px rgba(255, 107, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        body.light-theme .project-cta {
+            border-color: rgba(255, 107, 0, 0.45);
+            box-shadow: none;
+        }
+
+        body.light-theme .project-cta:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
         }
 
         .project-link {
@@ -1231,6 +1440,31 @@
         .project-link:hover {
             color: var(--accent-blue);
             transform: translateX(5px);
+        }
+
+        .projects-swiper .swiper-pagination {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 6px;
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            z-index: 4;
+        }
+
+        .projects-swiper .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            opacity: 0.35;
+            transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+        }
+
+        .projects-swiper .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: var(--accent-orange);
+            transform: scale(1.15);
         }
 
         /* ============================================
@@ -1585,8 +1819,47 @@
                 height: 400px;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .project-slide {
+                flex-direction: column;
+                align-items: flex-start;
+                min-height: 0;
+                padding-bottom: 56px;
+            }
+
+            .project-slide__text {
+                max-width: 100%;
+                padding-right: 0;
+                order: 1;
+            }
+
+            .project-slide__visual {
+                width: 100%;
+                order: 2;
+            }
+
+            .projects-carousel-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .projects-nav-pair {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 28px;
+                order: 2;
+                width: 100%;
+                padding-top: 8px;
+            }
+
+            .projects-swiper {
+                order: 1;
+                padding-bottom: 96px;
+            }
+
+            .projects-swiper .swiper-pagination {
+                bottom: 56px;
             }
         }
 
@@ -1758,8 +2031,8 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -1904,23 +2177,11 @@
             <div class="experience-card">
                 <div class="experience-dot"></div>
                 <div class="experience-content">
-                    <div class="experience-date">Sept 2024 – Aug 2025</div>
-                    <h3 class="experience-role">IT Developer</h3>
+                    <div class="experience-date">Feb 2024 – Aug 2025</div>
+                    <h3 class="experience-role">IT Developer / IT Intern</h3>
                     <div class="experience-company">Hewlett Packard Enterprise</div>
                     <p class="experience-description">
-                        Automation of internal certificates saving 6 figures for company and 1500 manual hours.
-                    </p>
-                    </div>
-                        </div>
-
-            <div class="experience-card">
-                <div class="experience-dot"></div>
-                <div class="experience-content">
-                    <div class="experience-date">Feb 2024 – Aug 2024</div>
-                    <h3 class="experience-role">IT Intern</h3>
-                    <div class="experience-company">Hewlett Packard Enterprise</div>
-                    <p class="experience-description">
-                        Worked on SAP suite supporting ERP functions for finance team.
+                        Automated SSL certificate renewals using rpa bot built on workfusion with java backend, reducing 1500 manual hours of effort and preventing downtime due to ssl failures. As an intern worked on optimizing and debugging programs in ABAP and understanding SAP Finance suite
                     </p>
                     </div>
                         </div>
@@ -1946,103 +2207,264 @@
                     <h2 class="section-title">Skills & Expertise</h2>
                 </div>
         
-                <div class="skills-grid">
+        <div class="skills-container">
             <!-- Languages -->
-            <div class="skill-item">
-                <i class="devicon-java-plain colored skill-icon"></i>
-                <span class="skill-name">Java</span>
-                        </div>
-            <div class="skill-item">
-                <i class="devicon-python-plain colored skill-icon"></i>
-                <span class="skill-name">Python</span>
+            <div class="skills-category">
+                <h3 class="skills-category-title">Languages</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="devicon-java-plain colored skill-icon"></i>
+                        <span class="skill-name">Java</span>
                     </div>
-            <div class="skill-item">
-                <i class="fas fa-code skill-icon"></i>
-                <span class="skill-name">ABAP</span>
-                        </div>
-            <div class="skill-item">
-                <i class="devicon-c-plain colored skill-icon"></i>
-                <span class="skill-name">C</span>
+                    <div class="skill-item">
+                        <i class="devicon-python-plain colored skill-icon"></i>
+                        <span class="skill-name">Python</span>
                     </div>
-            <div class="skill-item">
-                <i class="devicon-javascript-plain colored skill-icon"></i>
-                <span class="skill-name">JavaScript</span>
-                        </div>
-
-            <!-- Frameworks & Libraries -->
-            <div class="skill-item">
-                <i class="devicon-pytorch-plain colored skill-icon"></i>
-                <span class="skill-name">PyTorch</span>
+                    <div class="skill-item">
+                        <i class="devicon-javascript-plain colored skill-icon"></i>
+                        <span class="skill-name">JavaScript</span>
                     </div>
-            <div class="skill-item">
-                <i class="devicon-tensorflow-original colored skill-icon"></i>
-                <span class="skill-name">TensorFlow</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-brain skill-icon"></i>
-                <span class="skill-name">Scikit-learn</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-pandas-plain colored skill-icon"></i>
-                <span class="skill-name">Pandas</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-numpy-plain colored skill-icon"></i>
-                <span class="skill-name">NumPy</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-flask-original colored skill-icon"></i>
-                <span class="skill-name">Flask</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-network-wired skill-icon"></i>
-                <span class="skill-name">REST APIs</span>
-            </div>
-
-            <!-- Tools & Platforms -->
-            <div class="skill-item">
-                <i class="fas fa-microchip skill-icon"></i>
-                <span class="skill-name">Copilot</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-wand-magic-sparkles skill-icon"></i>
-                <span class="skill-name">Cursor AI</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-robot skill-icon"></i>
-                <span class="skill-name">WorkFusion</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-robot skill-icon"></i>
-                <span class="skill-name">UiPath</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-amazonwebservices-plain-wordmark colored skill-icon"></i>
-                <span class="skill-name">AWS</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-postman-plain colored skill-icon"></i>
-                <span class="skill-name">Postman</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-chart-line skill-icon"></i>
-                <span class="skill-name">Power BI</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-git-plain colored skill-icon"></i>
-                <span class="skill-name">Git</span>
-            </div>
-            <div class="skill-item">
-                <i class="devicon-github-original colored skill-icon"></i>
-                <span class="skill-name">GitHub</span>
                 </div>
             </div>
-        </section>
+
+            <!-- Machine Learning & Data Analytics -->
+            <div class="skills-category">
+                <h3 class="skills-category-title">Machine Learning & Data Analytics</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="devicon-pytorch-plain colored skill-icon"></i>
+                        <span class="skill-name">PyTorch</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-tensorflow-original colored skill-icon"></i>
+                        <span class="skill-name">TensorFlow</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-brain skill-icon"></i>
+                        <span class="skill-name">Scikit-learn</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-pandas-plain colored skill-icon"></i>
+                        <span class="skill-name">Pandas</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-numpy-plain colored skill-icon"></i>
+                        <span class="skill-name">NumPy</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-chart-line skill-icon"></i>
+                        <span class="skill-name">Power BI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frameworks & Libraries -->
+            <div class="skills-category">
+                <h3 class="skills-category-title">Frameworks & Libraries</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="devicon-django-plain colored skill-icon"></i>
+                        <span class="skill-name">Django</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-fastapi-plain colored skill-icon"></i>
+                        <span class="skill-name">FastAPI</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-flask-original colored skill-icon"></i>
+                        <span class="skill-name">Flask</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-layer-group skill-icon"></i>
+                        <span class="skill-name">Streamlit</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-network-wired skill-icon"></i>
+                        <span class="skill-name">REST APIs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Tools -->
+            <div class="skills-category">
+                <h3 class="skills-category-title">Developer Tools</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="fas fa-wand-magic-sparkles skill-icon"></i>
+                        <span class="skill-name">Cursor / Copilot</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-robot skill-icon"></i>
+                        <span class="skill-name">WorkFusion</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-amazonwebservices-plain-wordmark colored skill-icon"></i>
+                        <span class="skill-name">AWS</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-postman-plain colored skill-icon"></i>
+                        <span class="skill-name">Postman</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-git-plain colored skill-icon"></i>
+                        <span class="skill-name">Git</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="devicon-github-original colored skill-icon"></i>
+                        <span class="skill-name">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="section-header">
+            <div class="section-number">04</div>
+            <h2 class="section-title">Featured Projects</h2>
+        </div>
+
+        <div class="projects-carousel-wrap">
+            <div class="swiper projects-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">Deepfake Detection System</h3>
+                                <p class="project-description">
+                                    Novel approach using physiological features for detecting deepfakes.
+                                    Benchmarked on CelebDF and DFDC datasets with high accuracy.
+                                </p>
+                                <a href="https://github.com/Kunal23002/Deepfake-Detection" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Deepfake Detection System preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">Yet Another Kafka</h3>
+                                <p class="project-description">
+                                    Custom distributed messaging system built with socket programming.
+                                    Implements core Kafka functionality with high throughput.
+                                </p>
+                                <a href="https://github.com/Kunal23002/YetAnotherKafka" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Yet Another Kafka preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">Image Caption Generator</h3>
+                                <p class="project-description">
+                                    Vision transformers + NLP for generating Instagram-style captions.
+                                    Images stored on AWS S3 with real-time processing.
+                                </p>
+                                <a href="https://github.com/Kunal23002/imagecaption" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Image Caption Generator preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">Bill Splitting App</h3>
+                                <p class="project-description">
+                                    Lightweight Python CLI/GUI application for splitting bills among friends.
+                                    Features expense tracking and automated calculations.
+                                </p>
+                                <a href="https://github.com/Kunal23002/split" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Bill Splitting App preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">OnlyNotes</h3>
+                                <p class="project-description">
+                                    Classroom notes sharing platform that brings students together. Features Canvas LMS integration,
+                                    secure authentication with Stack Auth, and collaborative study materials.
+                                </p>
+                                <a href="https://github.com/Kunal23002/onlyNotes" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="OnlyNotes preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <article class="project-slide">
+                            <div class="project-slide__text">
+                                <h3 class="project-title">AI Jobs Screener</h3>
+                                <p class="project-description">
+                                    Voice-powered job screening platform for blue-collar workers. Uses VAPI.ai for real-time voice interviews
+                                    and Convex for backend management with automated assessment generation.
+                                </p>
+                                <a href="https://github.com/rsvedant/ai-jobs-screener" class="project-cta" target="_blank" rel="noopener noreferrer">
+                                    Take a look! <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <div class="project-slide__visual">
+                                <div class="project-slide__img-wrap">
+                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="AI Jobs Screener preview" loading="lazy" decoding="async" width="900" height="560">
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="swiper-pagination" aria-hidden="true"></div>
+            </div>
+            <div class="projects-nav-pair">
+                <button type="button" class="projects-nav-btn projects-nav-btn--prev" id="projectsNavPrev" aria-label="Previous project">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="projects-nav-btn projects-nav-btn--next" id="projectsNavNext" aria-label="Next project">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </section>
 
         <!-- Education Section -->
     <section id="education" class="education">
         <div class="section-header">
-            <div class="section-number">04</div>
+            <div class="section-number">05</div>
                     <h2 class="section-title">Education</h2>
                 </div>
         
@@ -2091,94 +2513,6 @@
                     <p class="education-description">
                         Completed ICSE (Class 10) and ISC (Class 12) education with strong foundation in academics.
                     </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="section-header">
-            <div class="section-number">05</div>
-                    <h2 class="section-title">Featured Projects</h2>
-                </div>
-        
-                <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-content">
-                        <h3 class="project-title">Deepfake Detection System</h3>
-                    <p class="project-description">
-                            Novel approach using physiological features for detecting deepfakes. 
-                            Benchmarked on CelebDF and DFDC datasets with high accuracy.
-                        </p>
-                        <a href="https://github.com/Kunal23002/Deepfake-Detection" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                        <h3 class="project-title">Yet Another Kafka</h3>
-                    <p class="project-description">
-                            Custom distributed messaging system built with socket programming. 
-                            Implements core Kafka functionality with high throughput.
-                        </p>
-                        <a href="https://github.com/Kunal23002/YetAnotherKafka" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                        <h3 class="project-title">Image Caption Generator</h3>
-                    <p class="project-description">
-                            Vision transformers + NLP for generating Instagram-style captions. 
-                            Images stored on AWS S3 with real-time processing.
-                        </p>
-                        <a href="https://github.com/Kunal23002/imagecaption" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                        <h3 class="project-title">Bill Splitting App</h3>
-                    <p class="project-description">
-                            Lightweight Python CLI/GUI application for splitting bills among friends. 
-                            Features expense tracking and automated calculations.
-                        </p>
-                        <a href="https://github.com/Kunal23002/split" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <h3 class="project-title">OnlyNotes</h3>
-                    <p class="project-description">
-                        Classroom notes sharing platform that brings students together. Features Canvas LMS integration, 
-                        secure authentication with Stack Auth, and collaborative study materials.
-                    </p>
-                    <a href="https://github.com/Kunal23002/onlyNotes" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <h3 class="project-title">AI Jobs Screener</h3>
-                    <p class="project-description">
-                        Voice-powered job screening platform for blue-collar workers. Uses VAPI.ai for real-time voice interviews 
-                        and Convex for backend management with automated assessment generation.
-                    </p>
-                    <a href="https://github.com/rsvedant/ai-jobs-screener" class="project-link">
-                        View on GitHub <i class="fab fa-github"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -2466,6 +2800,34 @@
             watchSlidesProgress: true,
         });
 
+        const projectsSwiper = new Swiper('.projects-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            speed: 550,
+            loop: true,
+            grabCursor: true,
+            watchOverflow: true,
+            observer: true,
+            observeParents: true,
+            centeredSlides: false,
+            navigation: {
+                nextEl: '#projectsNavNext',
+                prevEl: '#projectsNavPrev',
+            },
+            pagination: {
+                el: '.projects-swiper .swiper-pagination',
+                clickable: true,
+            },
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+            },
+            a11y: {
+                prevSlideMessage: 'Previous project',
+                nextSlideMessage: 'Next project',
+            },
+        });
+
         // Hamburger Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
@@ -2622,7 +2984,7 @@
             }
 
             // Animate content with stagger
-            const contentElements = section.querySelectorAll('.about-grid, .experience-grid, .skills-grid, .education-grid, .projects-grid, .recommendations-grid, .contact-content');
+            const contentElements = section.querySelectorAll('.about-grid, .experience-grid, .skills-grid, .education-grid, .projects-carousel-wrap, .recommendations-grid, .contact-content');
             contentElements.forEach(content => {
                 tl.from(content, {
                     y: 50,
@@ -2766,25 +3128,6 @@
                     ease: 'power3.out',
                 });
             }
-        });
-
-        gsap.utils.toArray('.project-card').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                },
-                y: 80,
-                opacity: 0,
-                scale: 0.8,
-                rotateX: 15,
-                duration: 0.8,
-                delay: i * 0.1,
-                ease: 'back.out(1.5)',
-            });
-
-            // Scale on scroll removed for performance
         });
 
         gsap.utils.toArray('.recommendation-card').forEach((card, i) => {
