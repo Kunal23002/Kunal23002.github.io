@@ -1468,17 +1468,80 @@
         }
 
         /* ============================================
-           OTHER ACCOMPLISHMENTS SECTION
+           ENDORSEMENTS & ACCOMPLISHMENTS (combined)
         ============================================ */
-        .accomplishments {
+        .endorsements-section {
             padding: var(--section-padding);
             background: var(--bg-primary);
             position: relative;
         }
 
-        .accomplishments-content {
-            max-width: 600px;
+        .endorsements-layout {
+            max-width: 1400px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(260px, 400px);
+            gap: clamp(28px, 4vw, 48px);
+            align-items: start;
+        }
+
+        .endorsements-quotes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: clamp(10px, 1.4vw, 14px);
+            border: 2px solid rgba(0, 212, 255, 0.35);
+            border-radius: 10px;
+            background: linear-gradient(165deg, rgba(0, 212, 255, 0.06) 0%, transparent 55%);
+        }
+
+        .endorsements-quotes .recommendation-card {
+            padding: 18px 16px;
+            border-radius: 8px;
+            border-top-width: 2px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .endorsements-quotes .rec-avatar {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 10px;
+            font-size: 1rem;
+        }
+
+        .endorsements-quotes .rec-name {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+
+        .endorsements-quotes .rec-title {
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+
+        .endorsements-quotes .rec-preview {
+            font-size: 0.82rem;
+            line-height: 1.55;
+        }
+
+        body.light-theme .endorsements-quotes {
+            border-color: rgba(0, 212, 255, 0.45);
+            background: linear-gradient(165deg, rgba(0, 212, 255, 0.08) 0%, rgba(245, 245, 245, 0.5) 100%);
+        }
+
+        .endorsements-highlights {
+            position: sticky;
+            top: 100px;
+        }
+
+        .endorsements-highlights-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.35rem, 2vw, 1.65rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.25;
         }
 
         .accomplishment-card {
@@ -1497,6 +1560,10 @@
             border-top-color: var(--accent-blue);
         }
 
+        .accomplishment-card--compact {
+            padding: 36px 28px;
+        }
+
         .accomplishment-title {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
@@ -1506,6 +1573,10 @@
             text-transform: capitalize;
         }
 
+        .accomplishment-card--compact .accomplishment-title {
+            font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+        }
+
         .accomplishment-description {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1rem;
@@ -1513,29 +1584,14 @@
             line-height: 1.8;
         }
 
-        /* ============================================
-           RECOMMENDATIONS SECTION
-        ============================================ */
-        .recommendations {
-            padding: var(--section-padding);
-            background: var(--bg-primary);
-            position: relative;
-        }
-
-        .recommendations-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
         .recommendation-card {
             background: var(--bg-secondary);
             padding: 40px;
             text-align: center;
             border-top: 3px solid var(--accent-blue);
+            border-radius: 10px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
 
         .recommendation-card:hover {
@@ -1957,9 +2013,16 @@
                 font-size: 3rem;
             }
 
-            .skills-grid,
-            .recommendations-grid {
+            .skills-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .endorsements-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .endorsements-highlights {
+                position: static;
             }
 
             .contact-ctas {
@@ -2342,7 +2405,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Deepfake Detection System preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-deepfake-detection.png" alt="Deepfake Detection System preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2362,7 +2425,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Yet Another Kafka preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-yet-another-kafka.png" alt="Yet Another Kafka preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2382,7 +2445,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Image Caption Generator preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-image-caption-generator.png" alt="Image Caption Generator preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2402,7 +2465,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="Bill Splitting App preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-bill-splitter.png" alt="Bill Splitting App preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2422,7 +2485,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="OnlyNotes preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-onlynotes.png" alt="OnlyNotes preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2442,7 +2505,7 @@
                             </div>
                             <div class="project-slide__visual">
                                 <div class="project-slide__img-wrap">
-                                    <img class="project-slide__img" src="https://placehold.co/900x560/1a1a2e/b0b0b0?text=Project+preview" alt="AI Jobs Screener preview" loading="lazy" decoding="async" width="900" height="560">
+                                    <img class="project-slide__img" src="images/project-ai-jobs-screener.png" alt="AI Jobs Screener preview" loading="lazy" decoding="async" width="900" height="560">
                                 </div>
                             </div>
                         </article>
@@ -2518,62 +2581,57 @@
             </div>
         </section>
 
-        <!-- Other Accomplishments Section -->
-    <section id="accomplishments" class="accomplishments">
+        <!-- Endorsements & other accomplishments (combined) -->
+    <section id="endorsements" class="endorsements-section">
         <div class="section-header">
             <div class="section-number">06</div>
-                    <h2 class="section-title">Other Accomplishments</h2>
+            <h2 class="section-title">Endorsed By</h2>
+        </div>
+
+        <div class="endorsements-layout">
+            <div class="endorsements-quotes" aria-label="Professional endorsements">
+                <div class="recommendation-card">
+                    <div class="rec-avatar">SK</div>
+                    <h3 class="rec-name">N.M. Shantha Kumara</h3>
+                    <p class="rec-title">Senior IT Manager, HPE</p>
+                    <p class="rec-preview">
+                        "Kunal consistently performed at a high level, completing all the tasks given to him to perfection....."
+                    </p>
                 </div>
-        
-        <div class="accomplishments-content">
-            <div class="accomplishment-card">
-                <h3 class="accomplishment-title">2x Hackathon Winner</h3>
-                <p class="accomplishment-description">Hackathons sponsored by Vercel and AWS</p>
+
+                <div class="recommendation-card">
+                    <div class="rec-avatar">KP</div>
+                    <h3 class="rec-name">Prof Kokila P</h3>
+                    <p class="rec-title">Assistant Professor, PES University</p>
+                    <p class="rec-preview">
+                        "Kunal's dedication to his studies has been commendable and a source of inspiration to his peers....."
+                    </p>
+                </div>
+
+                <div class="recommendation-card">
+                    <div class="rec-avatar">CK</div>
+                    <h3 class="rec-name">Dr. Charu Kathuria</h3>
+                    <p class="rec-title">Associate Professor, PES University</p>
+                    <p class="rec-preview">
+                        "His proficiency in Python programming could be seen from the way he used it to write a clean and structured code for the project...."
+                    </p>
+                </div>
             </div>
+
+            <aside class="endorsements-highlights" aria-label="Other accomplishments">
+                <h3 class="endorsements-highlights-title">Other Accomplishments</h3>
+                <div class="accomplishment-card accomplishment-card--compact">
+                    <h3 class="accomplishment-title">2x Hackathon Winner</h3>
+                    <p class="accomplishment-description">Hackathons sponsored by Vercel and AWS</p>
+                </div>
+            </aside>
         </div>
     </section>
-
-        <!-- Recommendations Section -->
-    <section id="recommendations" class="recommendations">
-        <div class="section-header">
-            <div class="section-number">07</div>
-                    <h2 class="section-title">Endorsed By</h2>
-                </div>
-        
-                <div class="recommendations-grid">
-            <div class="recommendation-card">
-                        <div class="rec-avatar">SK</div>
-                <h3 class="rec-name">N.M. Shantha Kumara</h3>
-                <p class="rec-title">Senior IT Manager, HPE</p>
-                <p class="rec-preview">
-                    "Kunal consistently performed at a high level, completing all the tasks given to him to perfection....."
-                </p>
-                    </div>
-
-            <div class="recommendation-card">
-                        <div class="rec-avatar">KP</div>
-                <h3 class="rec-name">Prof Kokila P</h3>
-                <p class="rec-title">Assistant Professor, PES University</p>
-                <p class="rec-preview">
-                    "Kunal's dedication to his studies has been commendable and a source of inspiration to his peers....."
-                </p>
-                    </div>
-
-            <div class="recommendation-card">
-                        <div class="rec-avatar">CK</div>
-                <h3 class="rec-name">Dr. Charu Kathuria</h3>
-                <p class="rec-title">Associate Professor, PES University</p>
-                <p class="rec-preview">
-                    "His proficiency in Python programming could be seen from the way he used it to write a clean and structured code for the project...."
-                </p>
-                </div>
-            </div>
-        </section>
 
         <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="section-header">
-            <div class="section-number">08</div>
+            <div class="section-number">07</div>
                     <h2 class="section-title">Let's Connect</h2>
                 </div>
         
@@ -2984,7 +3042,7 @@
             }
 
             // Animate content with stagger
-            const contentElements = section.querySelectorAll('.about-grid, .experience-grid, .skills-grid, .education-grid, .projects-carousel-wrap, .recommendations-grid, .contact-content');
+            const contentElements = section.querySelectorAll('.about-grid, .experience-grid, .skills-grid, .education-grid, .projects-carousel-wrap, .endorsements-layout, .contact-content');
             contentElements.forEach(content => {
                 tl.from(content, {
                     y: 50,
