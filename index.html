@@ -472,17 +472,33 @@
             }
         }
 
-        .hero-roles {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 400;
-            color: var(--text-secondary);
+        .hero-social-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
             margin-bottom: 14px;
-            letter-spacing: 1px;
         }
 
-        .hero-roles span {
+        .hero-social-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(0, 212, 255, 0.45);
             color: var(--accent-blue);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-social-link:hover {
+            color: var(--accent-orange);
+            border-color: rgba(255, 107, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(255, 107, 0, 0.18);
         }
 
         .hero-tagline {
@@ -2169,9 +2185,14 @@
                         <text x="50%" y="60" dominant-baseline="middle" text-anchor="middle" class="hero-name-stroke crawl-stroke-2" fill="none" stroke="#00d4ff" stroke-width="3">KUNAL</text>
                     </svg>
                 </div>
-                <p class="hero-roles">
-                    <span>Developer</span> · <span>Programmer</span> · <span>Student</span>
-                </p>
+                <div class="hero-social-links" aria-label="Social links">
+                    <a href="https://www.linkedin.com/in/kunal3e/" class="hero-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/Kunal23002/" class="hero-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                    </a>
+                </div>
                 <p class="hero-tagline">
                     Building meaningful technology at the intersection of innovation, impact, and continuous learning. From AI-powered solutions to enterprise automation.
                 </p>
