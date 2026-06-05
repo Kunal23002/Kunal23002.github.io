@@ -36,6 +36,8 @@
             class="hero-spline-bg"
             loading-anim-type="none">
         </spline-viewer>
+        <!-- Covers the "Built with Spline" badge at bottom-right -->
+        <div class="spline-logo-cover" aria-hidden="true"></div>
 
         <!-- Overlay so text stays readable -->
         <div class="hero-bg-overlay" aria-hidden="true"></div>
@@ -132,6 +134,22 @@
         document.addEventListener('DOMContentLoaded', function() {
             requestIdleCallback ? requestIdleCallback(init) : setTimeout(init, 100);
         });
+
+        // Remove Spline watermark from shadow DOM once viewer loads
+        (function() {
+            const viewer = document.querySelector('.hero-spline-bg');
+            if (!viewer) return;
+            const strip = () => {
+                const root = viewer.shadowRoot;
+                if (!root) return;
+                ['#logo','[id*="logo"]','[class*="logo"]','[id*="watermark"]','a[href*="spline"]']
+                    .forEach(sel => root.querySelectorAll(sel).forEach(el => el.remove()));
+            };
+            viewer.addEventListener('load', strip);
+            // Fallback: poll briefly in case the event already fired
+            let attempts = 0;
+            const poll = setInterval(() => { strip(); if (++attempts > 20) clearInterval(poll); }, 300);
+        })();
 
         function init() {
             // Theme

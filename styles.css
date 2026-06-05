@@ -263,6 +263,18 @@ body.light-theme .theme-toggle:hover {
     z-index: 0;
 }
 
+/* Cover the "Built with Spline" badge — positioned over its fixed bottom-right location */
+.spline-logo-cover {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 160px;
+    height: 40px;
+    z-index: 10;
+    background: var(--bg-primary);
+    pointer-events: none;
+}
+
 /* Dim overlay so text stays legible over the 3D scene */
 .hero-bg-overlay {
     position: absolute;
