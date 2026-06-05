@@ -18,6 +18,8 @@
     <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"></noscript>
 
     <link rel="stylesheet" href="styles.css">
+    <!-- Spline 3D viewer (web component, no React needed) -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
 </head>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "563399ab33ce45d6970179eda8217021"}'></script><!-- End Cloudflare Web Analytics -->
 <body>
@@ -26,8 +28,19 @@
         <i class="fas fa-moon"></i>
     </button>
 
-    <!-- Hero — Landing -->
+    <!-- Hero — Landing (full-screen Spline background) -->
     <div class="hero-landing">
+        <!-- 3D robot background -->
+        <spline-viewer
+            url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            class="hero-spline-bg"
+            loading-anim-type="none">
+        </spline-viewer>
+
+        <!-- Overlay so text stays readable -->
+        <div class="hero-bg-overlay" aria-hidden="true"></div>
+
+        <!-- Foreground content -->
         <div class="hero-landing-content">
             <div class="hero-label">Kunal's Portfolio</div>
             <div class="hero-name-container">
@@ -51,7 +64,6 @@
                     <i class="fab fa-github"></i>
                 </a>
             </div>
-            <!-- Nav buttons inside hero -->
             <div class="hero-nav-grid">
                 <a href="about.html" class="glass-nav-btn">
                     <div class="glass-nav-btn__blur"></div><div class="glass-nav-btn__fill"></div><div class="glass-nav-btn__highlight"></div>
