@@ -1882,6 +1882,7 @@ body.light-theme .endorsements-quotes {
 .contact--minimal {
     padding: 48px 5% 64px;
     text-align: center;
+    overflow: visible; /* allow dropdown to escape parent bounds */
 }
 
 .contact-label {
@@ -2026,25 +2027,26 @@ body.light-theme .endorsements-quotes {
 
 .resume-dropdown-menu {
     position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    min-width: 100%;
+    bottom: calc(100% + 10px); /* opens upward — never clipped at bottom of page */
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 140px;
     background: var(--bg-secondary);
     border: 2px solid var(--accent-orange);
     border-radius: 15px;
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
     transition: all 0.3s ease;
     z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .resume-dropdown.active .resume-dropdown-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 .resume-option {
